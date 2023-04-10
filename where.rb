@@ -18,7 +18,8 @@ puts '{'
 puts '"people": ['
 people.each do |person, details|
   results = Geocoder.search details[:location]
-  people[person][geo: results.first.coordinates]
+  people[person][:geo]=results.first.coordinates
+
   puts '{ "name": "'+person+'",
     "latitude": '+results.first.coordinates.first.to_s+',
     "longitude": '+results.first.coordinates.last.to_s+'
@@ -26,3 +27,7 @@ people.each do |person, details|
 end
 puts ' ] '
 puts '}'
+
+puts "*"*20
+sorted_people = people.sort_by { |key, value| value[:geo].first }.to_h
+puts sorted_people
